@@ -29,6 +29,8 @@ function incrementCounter(){
   sh.getRange("B1").setValue(last + 1);
 }
 
+/* ================= COUNTER CLOSE ================= */
+
 /* ================= YEAR SHEET ================= */
 
 function getYearSheet(){
@@ -48,3 +50,26 @@ function getYearSheet(){
   return sh;
 }
 
+/* ================= YEAR SHEET CLOSE ================= */
+
+/* ================= DRIVE FOLDER ================= */
+
+function getMonthFolder(){
+  const root = DriveApp.getFolderById(ROOT_FOLDER_ID);
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = ("0" + (now.getMonth()+1)).slice(-2);
+
+  let yearFolder = getOrCreate(root, year.toString());
+  let monthFolder = getOrCreate(yearFolder, month);
+
+  return monthFolder;
+}
+
+function getOrCreate(parent, name){
+  const it = parent.getFoldersByName(name);
+  return it.hasNext() ? it.next() : parent.createFolder(name);
+}
+
+/* ================= DRIVE FOLDER CLOSE ================= */
