@@ -102,3 +102,24 @@ function getPart(part){
 
 /* ================= MASTER CLOSE ================= */
 
+/* ================= GET OPEN DC ================= */
+
+function getOpenDC(){
+
+  const sh = SpreadsheetApp.getActive()
+    .getSheetByName("DC_STATUS");
+
+  if(!sh || sh.getLastRow() < 2) return [];
+
+  const data = sh.getRange(2,1,sh.getLastRow()-1,7).getValues();
+
+  return data
+    .filter(r => r[4] === "OPEN")
+    .map(r => ({
+      dc: r[1],
+      part: r[2],
+      qty: r[3]
+    }));
+}
+
+/* ================= GET OPEN DC CLOSE ================= */
