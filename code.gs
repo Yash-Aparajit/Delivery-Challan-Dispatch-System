@@ -87,5 +87,18 @@ function getCustomers(){
     .filter(r => r[2] === true);
 }
 
+function getPart(part){
+  const sh = SpreadsheetApp.getActive().getSheetByName(PART_SHEET);
+  if(sh.getLastRow() < 2) return null;
+  const data = sh.getRange(2,1,sh.getLastRow()-1,4).getValues();
+
+  for(let r of data){
+    if(r[0] == part && r[3] === true){
+      return {desc:r[1],uom:r[2]};
+    }
+  }
+  return null;
+}
+
 /* ================= MASTER CLOSE ================= */
 
