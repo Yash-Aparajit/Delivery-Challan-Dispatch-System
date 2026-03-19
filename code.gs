@@ -73,3 +73,19 @@ function getOrCreate(parent, name){
 }
 
 /* ================= DRIVE FOLDER CLOSE ================= */
+
+/* ================= MASTER ================= */
+
+function getCustomers(){
+  const sh = SpreadsheetApp.getActive().getSheetByName(CUSTOMER_SHEET);
+  if(!sh) throw new Error("MASTER_CUSTOMER missing");
+
+  if(sh.getLastRow() < 2) return [];
+
+  return sh.getRange(2,1,sh.getLastRow()-1,3)
+    .getValues()
+    .filter(r => r[2] === true);
+}
+
+/* ================= MASTER CLOSE ================= */
+
