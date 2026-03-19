@@ -29,7 +29,7 @@ function incrementCounter(){
   sh.getRange("B1").setValue(last + 1);
 }
 
-/* ================= COUNTER CLOSE ================= */
+/* ================= COUNTER END ================= */
 
 /* ================= YEAR SHEET ================= */
 
@@ -50,7 +50,7 @@ function getYearSheet(){
   return sh;
 }
 
-/* ================= YEAR SHEET CLOSE ================= */
+/* ================= YEAR SHEET END ================= */
 
 /* ================= DRIVE FOLDER ================= */
 
@@ -72,7 +72,7 @@ function getOrCreate(parent, name){
   return it.hasNext() ? it.next() : parent.createFolder(name);
 }
 
-/* ================= DRIVE FOLDER CLOSE ================= */
+/* ================= DRIVE FOLDER END ================= */
 
 /* ================= MASTER ================= */
 
@@ -100,7 +100,7 @@ function getPart(part){
   return null;
 }
 
-/* ================= MASTER CLOSE ================= */
+/* ================= MASTER END ================= */
 
 /* ================= GET OPEN DC ================= */
 
@@ -122,7 +122,7 @@ function getOpenDC(){
     }));
 }
 
-/* ================= GET OPEN DC CLOSE ================= */
+/* ================= GET OPEN DC END ================= */
 
 /* ================= CLOSE DC ================= */
 
