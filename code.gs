@@ -251,3 +251,50 @@ function updatePdfLink(dc, url){
 }
 
 /* ================= UPDATE PDF END ================= */
+
+/* ================= PDF ================= */
+
+function generatePDF(payload, dcNo){
+
+  const tz = Session.getScriptTimeZone();
+
+  const dateObj = new Date();
+
+  const displayDate = Utilities.formatDate(dateObj, tz, "dd/MM/yyyy");
+  const fileDate = Utilities.formatDate(dateObj, tz, "ddMMyyyy");
+
+  const template = HtmlService.createTemplateFromFile("print");
+
+  template.data = {
+    dc: dcNo,
+    date: displayDate,
+    vehicle: payload.vehicle || "",
+    part: payload.part || "",
+    desc: payload.desc || "",
+    qty: payload.qty || "",
+    remarks: payload.remarks || "",
+    customer: payload.customer_name
+  };
+
+
+  const html = template.evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();
+
+  const blob = Utilities.newBlob(html, "text/html")
+    .getAs("application/pdf");
+
+  const fileName = `DCNo._${fileDate}_${dcNo}.pdf`;
+
+  const folder = getMonthFolder();   // existing function
+
+  const file = folder.createFile(blob.setName(fileName));
+
+  return {
+    url: file.getUrl(),
+    base64: Utilities.base64Encode(blob.getBytes()),
+    name: fileName
+  };
+}
+
+/* ================= PDF END ================= */
