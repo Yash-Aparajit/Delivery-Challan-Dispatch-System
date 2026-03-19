@@ -231,3 +231,23 @@ function saveDC(payload){
 }
 
 /* ================= SAVE DC END ================= */
+
+/* ================= UPDATE PDF ================= */
+
+function updatePdfLink(dc, url){
+  const sh = getYearSheet();
+
+  const lastRow = sh.getLastRow();
+  if(lastRow < 2) return;
+
+  const data = sh.getRange(2,2,lastRow-1,1).getValues();
+
+  for(let i=0;i<data.length;i++){
+    if(data[i][0] == dc){
+      sh.getRange(i+2,13).setValue(url);
+      return;
+    }
+  }
+}
+
+/* ================= UPDATE PDF END ================= */
