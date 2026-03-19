@@ -123,3 +123,111 @@ function getOpenDC(){
 }
 
 /* ================= GET OPEN DC CLOSE ================= */
+
+/* ================= CLOSE DC ================= */
+
+function closeDC(dc, invoice){
+
+  const sh = SpreadsheetApp.getActive()
+    .getSheetByName("DC_STATUS");
+
+  if(!sh) throw new Error("DC_STATUS missing");
+
+  const data = sh.getRange(2,1,sh.getLastRow()-1,7).getValues();
+
+  for(let i=0;i<data.length;i++){
+
+    if(data[i][1] == dc && data[i][4] === "OPEN"){
+
+      sh.getRange(i+2,5).setValue("CLOSED");
+      sh.getRange(i+2,6).setValue(invoice);
+      sh.getRange(i+2,7).setValue(new Date());
+
+      return true;
+    }
+  }
+
+  throw new Error("DC not found or already closed");
+}
+
+/* ================= CLOSE DC END ================= */
+
+/* ================= SAVE DC ================= */
+
+function saveDC(payload){
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+
+  let dc;
+  let sh;
+
+  try{
+
+    const ss = SpreadsheetApp.getActive();
+    const config = ss.getSheetByName(CONFIG_SHEET);
+
+    let last = Number(config.getRange("B1").getValue());
+    if(isNaN(last)) throw new Error("CONFIG counter corrupted");
+
+    dc = last + 1;
+
+    // increment counter
+    config.getRange("B1").setValue(dc);
+
+    // timestamp
+    const ts = Utilities.formatDate(
+      new Date(),
+      Session.getScriptTimeZone(),
+      "dd/MM/yyyy HH:mm"
+    );
+
+    // get log sheet
+    sh = getYearSheet();
+
+    // append INSIDE lock (atomic commit)
+    sh.appendRow([
+      ts,
+      dc,
+      payload.machine,
+      payload.operator,
+      payload.customer_id,
+      payload.customer_name,
+      payload.vehicle,
+      payload.driver,
+      payload.part,
+      payload.desc,
+      payload.qty,
+      payload.uom,
+      ""
+    ]);
+
+    const statusSheet = ss.getSheetByName("DC_STATUS");
+    if(statusSheet){
+      statusSheet.appendRow([
+        ts,
+        dc,
+        payload.part,
+        payload.qty,
+        "OPEN",
+        "",
+        ""
+      ]);
+    }
+
+  } finally {
+    lock.releaseLock();
+  }
+
+  const pdf = generatePDF(payload, dc);
+
+  updatePdfLink(dc, pdf.url);
+
+  return {
+    dc: dc,
+    url: pdf.url,
+    base64: pdf.base64
+  };
+}
+
+/* ================= SAVE DC END ================= */
