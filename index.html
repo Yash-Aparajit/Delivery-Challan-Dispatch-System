@@ -11,3 +11,93 @@ body{
   font-family: "Segoe UI", Arial, sans-serif;
   background:#eef1f4;
 }
+.wrapper{
+  width:100%;
+  max-width:920px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:white;
+  padding:28px;
+  border-radius:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+h2{
+  margin:0 0 24px 0;
+  font-size:22px;
+  font-weight:600;
+  color:#222;
+}
+
+.section{
+  margin-bottom:22px;
+  padding-bottom:14px;
+  border-bottom:1px solid #e3e6ea;
+}
+
+.section:last-child{
+  border-bottom:none;
+}
+
+.section-title{
+  font-size:13px;
+  font-weight:600;
+  color:#6b7280;
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px 16px;
+}
+
+.full{
+  grid-column:1 / -1;
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  color:#444;
+  margin-bottom:4px;
+  display:block;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:12px 12px;
+  border:1px solid #cfd6dd;
+  border-radius:4px;
+  font-size:14px;
+  background:#fafbfc;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline:none;
+  border-color:#2563eb;
+  background:white;
+}
+
+textarea{
+  height:90px;
+  resize:none;
+}
+
+button{
+  background:#0f172a;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:4px;
+  cursor:pointer;
+  width:100%;
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:.3px;
+}
