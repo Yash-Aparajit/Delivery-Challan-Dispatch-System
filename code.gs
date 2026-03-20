@@ -7,6 +7,12 @@ const ROOT_FOLDER_ID = "YOUR FOLDER ID HERE";
 
 
 function doGet(e){
+
+  if(e && e.parameter.mode === "close"){
+    return HtmlService.createHtmlOutputFromFile("close")
+      .setTitle("Close DC");
+  }
+
   return HtmlService.createHtmlOutputFromFile("index")
     .setTitle("Dispatch DC");
 }
@@ -111,14 +117,16 @@ function getOpenDC(){
 
   if(!sh || sh.getLastRow() < 2) return [];
 
-  const data = sh.getRange(2,1,sh.getLastRow()-1,7).getValues();
+  const data = sh.getRange(2,1,sh.getLastRow()-1,9).getValues();
 
   return data
-    .filter(r => r[4] === "OPEN")
+    .filter(r => r[6] === "OPEN")
     .map(r => ({
       dc: r[1],
-      part: r[2],
-      qty: r[3]
+      customer: r[2],
+      part: r[3],
+      qty: r[4],
+      remark: r[5]
     }));
 }
 
@@ -133,15 +141,15 @@ function closeDC(dc, invoice){
 
   if(!sh) throw new Error("DC_STATUS missing");
 
-  const data = sh.getRange(2,1,sh.getLastRow()-1,7).getValues();
+  const data = sh.getRange(2,1,sh.getLastRow()-1,9).getValues();
 
   for(let i=0;i<data.length;i++){
 
-    if(data[i][1] == dc && data[i][4] === "OPEN"){
+    if(data[i][1] == dc && data[i][6] === "OPEN"){
 
-      sh.getRange(i+2,5).setValue("CLOSED");
-      sh.getRange(i+2,6).setValue(invoice);
-      sh.getRange(i+2,7).setValue(new Date());
+      sh.getRange(i+2,7).setValue("CLOSED");     
+      sh.getRange(i+2,8).setValue(invoice);      
+      sh.getRange(i+2,9).setValue(new Date());   
 
       return true;
     }
@@ -207,8 +215,10 @@ function saveDC(payload){
       statusSheet.appendRow([
         ts,
         dc,
+        payload.customer_name,
         payload.part,
         payload.qty,
+        payload.remarks,  
         "OPEN",
         "",
         ""
@@ -276,7 +286,6 @@ function generatePDF(payload, dcNo){
     customer: payload.customer_name
   };
 
-
   const html = template.evaluate()
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .getContent();
@@ -289,6 +298,7 @@ function generatePDF(payload, dcNo){
   const folder = getMonthFolder();   // existing function
 
   const file = folder.createFile(blob.setName(fileName));
+
 
   return {
     url: file.getUrl(),
