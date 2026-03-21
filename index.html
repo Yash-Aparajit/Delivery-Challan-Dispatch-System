@@ -212,3 +212,45 @@ function validateForm(){
 
   const v = vehicle.value.trim().toUpperCase();
 
+  const vehicleRegex = /^[A-Z]{2}[- ]?\d{2}[- ]?[A-Z]{1,2}[- ]?\d{4}$/;
+
+  if(!v){
+    showError("Enter vehicle number");
+    return false;
+  }
+
+  if(!vehicleRegex.test(v)){
+    showError("Invalid vehicle format");
+    return false;
+  }
+
+  if(!part.value.trim()){
+    showError("Enter part ID");
+    return false;
+  }
+
+  if(!partData){
+    showError("Invalid or unknown part");
+    return false;
+  }
+
+  if(!qty.value || Number(qty.value) <= 0){
+    showError("Enter valid quantity");
+    return false;
+  }
+
+  if(!desc.value.trim()){
+    showError("Part description missing");
+    return false;
+  }
+
+  if(!remarks.value.trim()){
+    showError("Enter remarks");
+    return false;
+  }
+
+  vehicle.value = v;
+
+  return true;
+}
+
