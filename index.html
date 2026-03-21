@@ -121,3 +121,74 @@ button:disabled{
 .fetch{ color:#475569; }
 
 </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="card">
+
+<h2>Delivery Challan</h2>
+
+<div class="section">
+<div class="section-title">Operator Info</div>
+<div class="grid">
+<div>
+<label>Operator</label>
+<input id="operator">
+</div>
+
+<div>
+<label>Customer</label>
+<select id="customer"></select>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Dispatch Details</div>
+<div class="grid">
+<div>
+<label>Vehicle No</label>
+<input id="vehicle">
+</div>
+
+<div>
+<label>Driver Name</label>
+<input id="driver">
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Material</div>
+<div class="grid">
+<div>
+<label>Part ID</label>
+<input id="part">
+</div>
+
+<div>
+<label>Qty</label>
+<input type="number" id="qty">
+</div>
+
+<div class="full">
+<label>Description</label>
+<input id="desc" readonly>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Remarks</div>
+<textarea id="remarks"></textarea>
+</div>
+
+<button id="saveBtn" onclick="save()">SAVE & DOWNLOAD DC</button>
+
+<div id="msg" class="msg"></div>
+
+</div>
+</div>
