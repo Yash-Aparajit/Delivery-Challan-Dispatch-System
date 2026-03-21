@@ -192,3 +192,23 @@ button:disabled{
 
 </div>
 </div>
+
+  <script>
+
+let saving = false;
+let partData = null;
+
+function validateForm(){
+
+  if(!operator.value.trim()){
+    showError("Enter operator name");
+    return false;
+  }
+
+  if(!customer.value){
+    showError("Select customer");
+    return false;
+  }
+
+  const v = vehicle.value.trim().toUpperCase();
+
