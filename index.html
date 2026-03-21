@@ -11,6 +11,7 @@ body{
   font-family: "Segoe UI", Arial, sans-serif;
   background:#eef1f4;
 }
+
 .wrapper{
   width:100%;
   max-width:920px;
@@ -102,7 +103,7 @@ button{
   letter-spacing:.3px;
 }
 
-  button:hover{
+button:hover{
   background:#020617;
 }
 
@@ -193,7 +194,7 @@ button:disabled{
 </div>
 </div>
 
-  <script>
+<script>
 
 let saving = false;
 let partData = null;
@@ -261,7 +262,7 @@ function showError(text){
 
 /* ===== LOAD CUSTOMER ===== */
 
-    google.script.run.withSuccessHandler(list=>{
+google.script.run.withSuccessHandler(list=>{
   list.forEach(r=>{
     customer.innerHTML += `<option value="${r[0]}">${r[1]}</option>`;
   });
@@ -269,7 +270,7 @@ function showError(text){
 
 /* ===== FETCH PART ===== */
 
-    part.onblur = function(){
+part.onblur = function(){
   const code = part.value.trim();
   if(!code) return;
 
@@ -289,7 +290,7 @@ function showError(text){
   }).getPart(code);
 }
 
-    /* ===== SAVE ===== */
+/* ===== SAVE ===== */
 
 function save(){
 
@@ -341,6 +342,7 @@ google.script.run
   saving=false;
   saveBtn.disabled=false;
 })
+  
 .saveDC({
   operator:operator.value,
   customer_id:customer.value,
