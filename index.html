@@ -268,3 +268,23 @@ function showError(text){
 }).getCustomers();
 
 /* ===== FETCH PART ===== */
+
+    part.onblur = function(){
+  const code = part.value.trim();
+  if(!code) return;
+
+  msg.innerText="Fetching part...";
+  msg.className="msg fetch";
+
+  google.script.run.withSuccessHandler(res=>{
+    if(res){
+      desc.value = res.desc;
+      partData = res;
+      msg.innerText="";
+    }else{
+      desc.value="";
+      msg.innerText="Part not found";
+      msg.className="msg error";
+    }
+  }).getPart(code);
+}
