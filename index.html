@@ -288,3 +288,76 @@ function showError(text){
     }
   }).getPart(code);
 }
+
+    /* ===== SAVE ===== */
+
+function save(){
+
+if(saving) return;
+
+if(!validateForm()){
+  return;
+}
+
+saving = true;
+saveBtn.disabled = true;
+msg.innerText="Generating DC...";
+msg.className="msg fetch";
+
+google.script.run
+.withSuccessHandler(res=>{
+
+  let a=document.createElement("a");
+  a.href="data:application/pdf;base64,"+res.base64;
+  a.download=`DC_${res.dc}.pdf`;
+  a.click();
+
+  msg.innerText="Saved successfully";
+  msg.className="msg success";
+
+  operator.value="";
+  vehicle.value="";
+  driver.value="";
+  part.value="";
+  qty.value="";
+  desc.value="";
+  remarks.value="";
+
+  partData=null;
+
+  // reset dropdown to first option
+  customer.selectedIndex=0;
+
+  // focus first field
+  operator.focus();
+
+  saving=false;
+  saveBtn.disabled=false;
+
+})
+.withFailureHandler(err=>{
+  msg.innerText=err.message;
+  msg.className="msg error";
+  saving=false;
+  saveBtn.disabled=false;
+})
+.saveDC({
+  operator:operator.value,
+  customer_id:customer.value,
+  customer_name:customer.options[customer.selectedIndex].text,
+  vehicle:vehicle.value,
+  driver:driver.value,
+  part:part.value,
+  desc:desc.value,
+  qty:qty.value,
+  uom:partData.uom,
+  remarks:remarks.value,
+  machine:localStorage.getItem("machine") || "DISPATCH_PC"
+});
+
+}
+
+</script>
+
+</body>
+</html>
