@@ -46,3 +46,29 @@ td{
 }
 </style>
 </head>
+
+<body>
+
+<?
+const COPIES=[
+"First Copy – For BAL Store",
+"Second Copy – For Vendor Acknowledgement",
+"Third Copy – For BAL Security Gate",
+"ACK Copy – For BAL Security Gate"
+];
+?>
+
+<? COPIES.forEach(function(label){ ?>
+
+<div class="copy">
+
+<table>
+
+<tr>
+<td colspan="8" class="center bold thickTop thickLeft thickRight">
+MATERIAL SUPPLY ON DELIVERY CHALLAN (DC)
+</td>
+</tr>
+
+<tr style="height:18mm">
+<td rowspan="3" colspan="2" class="logo thickLeft">
