@@ -233,3 +233,39 @@ function show(t,cls){
   msg.innerText = t;
   msg.className = "msg " + cls;
 }
+
+function removeClosedDC(){
+
+  const dc = dcSelect.value;
+
+  // remove from local array
+  dcData = dcData.filter(d => d.dc != dc);
+
+  // remove from dropdown
+  const opt = dcSelect.querySelector(`option[value="${dc}"]`);
+  if(opt) opt.remove();
+
+  // reset dropdown selection
+  dcSelect.value = "";
+
+  // reset UI
+  summary.style.display = "none";
+  invoice.value = "";
+  customer.innerText = "";
+  part.innerText = "";
+  qty.innerText = "";
+  remark.innerText = "";
+
+  if(dcData.length === 0){
+    dcSelect.innerHTML = "<option>No open DC</option>";
+    closeBtn.disabled = true;
+  }
+
+  busy = false;
+  closeBtn.disabled = false;
+} 
+
+</script>
+
+</body>
+</html>  
