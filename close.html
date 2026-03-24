@@ -191,3 +191,40 @@ dcSelect.onchange = function(){
     summary.style.display = "none";
   }
 }  
+
+/* CLOSE DC */
+
+function closeDC(){
+
+  if(busy) return;
+
+  const dc = dcSelect.value;
+  const inv = invoice.value.trim();
+
+  if(!dc){
+    show("Select DC","error");
+    return;
+  }
+
+  if(!inv){
+    show("Enter invoice number","error");
+    return;
+  }
+
+  busy = true;
+  closeBtn.disabled = true;
+  show("Closing DC...","info");
+
+  google.script.run
+  .withSuccessHandler(()=>{
+    show("DC closed successfully","success");
+    removeClosedDC();
+  })
+  .withFailureHandler(err=>{
+    show(err.message,"error");
+    busy = false;
+    closeBtn.disabled = false;
+  })
+  .closeDC(dc, inv);
+}
+  
