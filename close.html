@@ -155,4 +155,23 @@ let dcData = [];
 let busy = false;
 
 /* LOAD OPEN DC */
+
+google.script.run.withSuccessHandler(res=>{
+
+  dcData = res;
+
+  if(res.length === 0){
+    dcSelect.innerHTML = "<option>No open DC</option>";
+    closeBtn.disabled = true;
+    return;
+  }
+
+  dcSelect.innerHTML = "<option value=''>Select DC</option>";
+
+  res.forEach(d=>{
+    dcSelect.innerHTML += `<option value="${d.dc}">DC ${d.dc}</option>`;
+  });
+
+}).getOpenDC();
+  
   
