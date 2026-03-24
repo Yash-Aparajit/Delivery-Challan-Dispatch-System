@@ -43,7 +43,6 @@ label{
   display:block;
   margin-bottom:6px;
 }
-  
 
 select,input{
   width:100%;
@@ -72,14 +71,13 @@ select:focus,input:focus{
   display:flex;
   justify-content:space-between;
   margin-bottom:8px;
-}  
-
+}
 
 .row span:first-child{
   color:#6b7280;
 }
 
- button{
+button{
   margin-top:24px;
   width:100%;
   padding:14px;
@@ -91,7 +89,7 @@ select:focus,input:focus{
   font-weight:600;
   cursor:pointer;
 }
-  
+
 button:hover{
   background:#020617;
 }
@@ -141,7 +139,7 @@ button:disabled{
 </div>
 <label style="margin-top:18px;">Invoice Number</label>
 <input id="invoice">
-  
+
 <button id="closeBtn" onclick="closeDC()">Mark DC Closed</button>
 
 <div id="msg" class="msg"></div>
@@ -173,7 +171,7 @@ google.script.run.withSuccessHandler(res=>{
   });
 
 }).getOpenDC();
-  
+
 /* SHOW SUMMARY */
 
 dcSelect.onchange = function(){
@@ -190,7 +188,7 @@ dcSelect.onchange = function(){
   }else{
     summary.style.display = "none";
   }
-}  
+}
 
 /* CLOSE DC */
 
@@ -227,7 +225,6 @@ function closeDC(){
   })
   .closeDC(dc, inv);
 }
-  
 
 function show(t,cls){
   msg.innerText = t;
@@ -268,4 +265,4 @@ function removeClosedDC(){
 </script>
 
 </body>
-</html>  
+</html>
