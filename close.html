@@ -174,4 +174,20 @@ google.script.run.withSuccessHandler(res=>{
 
 }).getOpenDC();
   
-  
+/* SHOW SUMMARY */
+
+dcSelect.onchange = function(){
+
+  const dc = dcSelect.value;
+  const found = dcData.find(d=>d.dc == dc);
+
+  if(found){
+    summary.style.display = "block";
+    customer.innerText = found.customer;
+    part.innerText = found.part;
+    qty.innerText = found.qty;
+    remark.innerText = found.remark;
+  }else{
+    summary.style.display = "none";
+  }
+}  
