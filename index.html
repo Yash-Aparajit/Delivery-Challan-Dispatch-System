@@ -199,6 +199,7 @@ button:disabled{
 let saving = false;
 let partData = null;
 
+  
 function validateForm(){
 
   if(!operator.value.trim()){
@@ -260,6 +261,7 @@ function showError(text){
   msg.className = "msg error";
 }
 
+  
 /* ===== LOAD CUSTOMER ===== */
 
 google.script.run.withSuccessHandler(list=>{
@@ -268,6 +270,7 @@ google.script.run.withSuccessHandler(list=>{
   });
 }).getCustomers();
 
+  
 /* ===== FETCH PART ===== */
 
 part.onblur = function(){
@@ -290,6 +293,7 @@ part.onblur = function(){
   }).getPart(code);
 }
 
+  
 /* ===== SAVE ===== */
 
 function save(){
@@ -359,6 +363,7 @@ google.script.run
 
 }
 
+  
 </script>
 
 </body>
